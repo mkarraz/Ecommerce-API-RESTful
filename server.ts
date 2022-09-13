@@ -55,7 +55,7 @@ declare module 'express-session' {
 /* dotenv.config() */
 
 //SERVER
-const port = process.env.PORT || 8081
+const port =  8081
 /* const port = serverConfig.PORT || 8081 */
 const app = express()
 
