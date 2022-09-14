@@ -4,7 +4,7 @@ import session from 'express-session'
 //Models
 import User from './api/models/schema/user'
 /* import products from './api/models/DBProductsContainer' */
-/* import daoChatFileSystem from './api/models/daos/chat/daoChatFileSystem' */
+import daoChatFileSystem from './api/models/daos/chat/daoChatFileSystem'
 //Server config
 import serverConfig from './api/config/server'
 import mongoDBConfig from './api/config/mongoDBConfig'
@@ -18,7 +18,7 @@ import sessionLogin from './api/routes/session/login'
 import sessionLogout from './api/routes/session/logout'
 import sessionSignup from './api/routes/session/signup'
 //Other routes
-import productsRouter from './api/routes/productsRouter'
+/* import productsRouter from './api/routes/productsRouter' */
 import cartsRouter from './api/routes/cartsRouter'
 import randomNumbersRouter from './api/routes/randomNumbersRouter'
 import infoRouter from './api/routes/infoRouter'
@@ -84,7 +84,35 @@ if (process.argv[3] === 'CLUSTER' && cluster.isPrimary) {
     })
     serverExpress.on('error', (err) => Logger.error(`An error has ocurred when starting: ${err}`))
 
+    //SOCKET
+    const io = new IOServer(serverExpress)
+    let messagesArray: any[] = []
 
+    io.on('connection', async (socket) => {
+        Logger.info(`New user connected: ${socket.id}`)
+        /* A cada cliente que se conecte se le mostrarán todos los mensajes y productos almacenados en la db.*/
+        //socket.emit('server:products', await products.getAll())
+        socket.emit('server:message', messagesArray)
+
+        /* socket.on('client:product', async (productInfo) => {
+            products.addProduct(productInfo)
+            io.emit('server:products', await products.getAll())
+        }) */
+
+        /* El servidor recibirá el mensaje del cliente, lo añadirá a la base de datos mediante la clase "chat" y luego utilizará la función getAllMessages para renderizar todos los mensajes en memoria. */
+        socket.on('client:message', async (messageInfo) => {
+            messageInfo.id = messagesArray.length + 1
+            messagesArray.push(messageInfo)
+            daoChatFileSystem.writeChatToFile(messagesArray)
+
+            /* Compression Rate */
+            const denormalizedMessages = messagesArray
+            const normalizedMessages = normalizeAndDenormalize('normalize', messagesArray)
+            let compressionRate = Math.round((1 - (JSON.stringify(normalizedMessages).length / JSON.stringify(denormalizedMessages).length)) * 100)
+            Logger.info('Comnpression Rate: ', compressionRate)
+            io.emit('server:message', messagesArray)
+        })
+    })
     
 }
 
@@ -154,7 +182,7 @@ passport.deserializeUser(async (id, done) => {
 app.use("/login", sessionLogin)
 app.use("/logout", sessionLogout)
 app.use("/signup", sessionSignup)
-app.use('/api', productsRouter, cartsRouter)//Conexiones hacia las rutas.
+//app.use('/api', productsRouter, cartsRouter)//Conexiones hacia las rutas.
 
 app.get("/", async (req, res: express.Response) => {
 	res.render("home", { logged: true, user: req.user })
