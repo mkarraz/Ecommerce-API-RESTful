@@ -151,14 +151,14 @@ passport.deserializeUser(async (id, done) => {
 /* app.use(checkUserRole) *///Middleware: checks user role.
 /* app.use(wrongRoute) *///Middleware: checks not implemented route.
 
-/* app.use("/login", sessionLogin)
+app.use("/login", sessionLogin)
 app.use("/logout", sessionLogout)
 app.use("/signup", sessionSignup)
 app.use('/api', productsRouter, cartsRouter)//Conexiones hacia las rutas.
 
 app.get("/", async (req, res: express.Response) => {
 	res.render("home", { logged: true, user: req.user })
-}) */
+})
 
 app.use("/info", infoRouter)
 app.use("/infoCompressed", compression(), infoRouter)
