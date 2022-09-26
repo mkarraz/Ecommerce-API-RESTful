@@ -2,20 +2,24 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-let chatDao: any
+let productDao: any
+let cartDao: any
 
 switch (process.env.DB_PROVIDER) {
     case 'fs':
-        import('./chat/daoChatFileSystem').then((dao) => (chatDao = dao.default))
+        import('./products/daoProductsFilesystem').then((dao) => (productDao = dao.default))
+        import('./cart/daoCartFilesystem').then((dao) => (cartDao = dao.default))
         break
 
-    case 'sqlite':
-        import('./chat/daoChatSQLite').then((dao) => (chatDao = dao.default))
+    case 'mongodb':
+        import('./products/daoProductsMongoDB').then((dao) => (productDao = dao.default))
+        import('./cart/daoCartMongoDB').then((dao) => (cartDao = dao.default))
         break
 
     default:
-        chatDao = require('./chat/daoChatFileSystem')
-        break;
+    productDao = require('./products/daoProductsMongoDB') 
+    cartDao = require('./cart/daoCartMongoDB')
+    break;
 }
 
-export { chatDao }
+export { productDao, cartDao }

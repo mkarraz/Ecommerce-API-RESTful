@@ -1,18 +1,15 @@
 import { Request, Response, NextFunction } from 'express'
+import Logger from '../utils/logger'
 
-export default (req: Request, res: Response, next: NextFunction) => {
-  const { isAdmin } = req.query //? [String type]: It's value should be either 'true' or 'false'.
+const checkUserRole = (req:any, res: any, next: NextFunction) => {
+	const user = req.user
+  try {
 
-  if (
-    !req.originalUrl.includes('/api/cart') &&
-    isAdmin !== 'true' &&
-    req.method !== 'GET'
-  ) {
-    return res.status(401).json({
-      error: -1,
-      msg: `${req.method}: ${req.originalUrl} --> Unauthorized`,
-    })
-  }
+		if (user.isAdmin === 'true') return next()
+		return res.json({ error: 'No tiene Permiso' , descripcion: `You do not have permission to access to ${req.originalUrl}`, code: '403'})
 
-  next()
+	} catch (err) {
+		Logger.error(`Error has occured when checkUserAuth method, ${err}`)
+	}
 }
+export default checkUserRole

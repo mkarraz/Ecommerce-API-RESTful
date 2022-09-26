@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3ra Entrega</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container"></div>
+
+            <!-- <div class="d-flex justify-content-start mt-3 ">
+
+                <h1 class="mb-3">Welcome, <img src="../<%= user.picture %>" style="width: 50px; height: 50px; border-radius: 50%;"></img><span class="text-success">  <%= user.name %></span></h1>
+                <a href="/signup/upload" class="btn btn-primary mt-2 mb-4 mx-3">Add Avatar</a>
+                <a href="/" class="btn btn-primary mt-2 mb-4 mx-3">Home</a>
+                
+                <form action='/logout' method='POST' class="mt-2 mx-3">
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                </form>
+            </div> -->
+
+            <!-- NAVBAR -->
+            <%- include('../partials/navbarAddProdForm.ejs', { user }) %> 
+            <!-- NAVBAR -->
+
+            <h2 class="px-3 my-4 bg-danger">Add new products</h2>
+            <form id='addProd' action='/api/products' method='POST'>
+                <input id="prodTitle" name="name" type="text" placeholder="Title" class="form-control w-50 my-2">
+                <input id="prodPrice" name="price" type="number" placeholder="Price" class="form-control w-50 my-2">
+                <input id="prodDescription" name="description" type="text" placeholder="Description" class="form-control w-50 my-2">
+                <input id="prodThumbnail" name="photoURL" type="text" placeholder="Url image" class="form-control w-50 my-2">
+                <input id="prodStock" name="stock" type="number" placeholder="Stock" class="form-control w-50 my-2">
+                <button type="submit" class="btn btn-danger">Add Product</button>
+            </form>
+            <!-- PRODUCTS FORM EXAMPLE -->
+            <div class="my-3">
+                <p> Title: Globo Terráqueo <br>
+                    Price: 345 <br>
+                    Thumbnail:
+                    https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png
+                </p>
+            </div>
+    </div>
+<!-- Normalizr -->
+<script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
+<!-- Importo Handlebars desde la CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+<!-- Importo libreria socket.io -->
+<script src="/socket.io/socket.io.js"></script>
+<!-- Importo configuración de los sockets -->
+<script src="./clientSocket.js"></script>
+<!-- Añado Estilos -->
+<link rel="stylesheet" href="./styles.css">
+</body>
+</html>

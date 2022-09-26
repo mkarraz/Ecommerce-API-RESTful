@@ -21,3 +21,10 @@ body {
 .chatDate {
     color: brown;
 }
+
+/* CURRENT PRODUCTS TABLE */
+.prodParams {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}

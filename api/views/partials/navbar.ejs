@@ -1,0 +1,19 @@
+<% if(user.isAdmin === 'true') { %>
+    <nav class="navbar navbar-dark bg-dark">
+        <h1 class="ms-3 mb-3 text-white">Welcome, <img src="./<%= user.picture %>" style="width: 50px; height: 50px; border-radius: 50%;"></img><span class="text-white">  <%= user.name %></span></h1>
+        <a href="/signup/upload" class="btn btn-warning mt-2 mb-4 mx-3">Add Avatar</a>
+        <a href="/views/addProdForm" class="btn btn-primary mt-2 mb-4 mx-3">Add Products</a>
+        <form action='/logout' method='POST' class="mt-2 mb-4 mx-3">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </nav>
+<% } else { %>
+    <nav class="navbar navbar-dark bg-dark">
+        <h1 class="ms-3 mb-3 text-white">Welcome, <img src="./<%= user.picture %>" style="width: 50px; height: 50px; border-radius: 50%;"></img><span class="text-white">  <%= user.name %></span></h1>
+        <a href="/signup/upload" class="btn btn-warning mt-2 mb-4 mx-3">Add Avatar</a>
+        <a href="/api/cart" class="btn btn-primary mt-2 mb-4 mx-3">Go to Cart</a>
+        <form action='/logout' method='POST' class="mt-2 mb-4 mx-3">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </nav>
+<% } %>

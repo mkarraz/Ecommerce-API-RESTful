@@ -50,28 +50,15 @@ const renderMessages = async (messagesArray) => {
         console.log(`Hubo un error ${error}`)
     }
 }
-/* const renderMessages = async ({ messagesArray, compressionRate }) => {
-    try {
-        
-        console.log('messagesArray', messagesArray)
-        console.log('compressionOutput', compressionOutput)
-        const chatTemplate  = await fetch('./partials/chat.hbs')
-        const hbsChatTemplateCompiled = Handlebars.compile(await chatTemplate.text())
-        messagesPool.innerHTML = hbsChatTemplateCompiled({messagesArray})
-
-    } catch(error) {
-        console.log(`Hubo un error ${error}`)
-    }
-} */
 
 const showNewProd = () => {
     try {
-        const title = prodTitleInput.value
+        const name = prodTitleInput.value
         const prodPrice = prodPriceInput.value
         const price = Number(prodPrice)
-        const thumbnail = prodThumbnailInput.value
+        const photoURL = prodThumbnailInput.value
 
-        socket.emit('client:product', { title, price, thumbnail })
+        socket.emit('client:product', { name, price, photoURL })
     } catch (error) {
         console.log(`Han error has ocurred; ${error}`)
     }
@@ -113,8 +100,3 @@ socket.on('server:products', products => {
 })
 
 socket.on('server:message', renderMessages)
-
-    /* socket.on('server:message', ({ messagesArray, compressionRate }) => {
-        console.log('sockeonmessage', messagesArray)
-        console.log('sockeoncompression', compressionRate)
-        renderMessages ({ messagesArray, compressionRate })}) */

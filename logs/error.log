@@ -21,3 +21,68 @@
 05-09-2022 19:58:53:5853 error: Error
 05-09-2022 20:03:26:326 error: Error
 06-09-2022 16:54:13:5413 error: Error
+17-09-2022 19:06:08:68 error: Error
+17-09-2022 19:09:30:930 error: Error
+17-09-2022 19:59:11:5911 error: Error
+17-09-2022 20:09:16:916 error: Error
+17-09-2022 20:16:28:1628 error: Error
+17-09-2022 23:31:32:3132 error: Error
+17-09-2022 23:37:30:3730 error: Error
+18-09-2022 00:26:52:2652 error: Error
+18-09-2022 00:34:33:3433 error: Error
+18-09-2022 00:35:02:352 error: Error
+18-09-2022 00:39:59:3959 error: Error
+18-09-2022 00:47:25:4725 error: Error
+18-09-2022 00:48:14:4814 error: Error
+18-09-2022 16:12:04:124 error: function Error() { [native code] }
+18-09-2022 16:12:16:1216 error: function Error() { [native code] }
+18-09-2022 16:14:19:1419 error: function Error() { [native code] }
+18-09-2022 16:20:22:2022 error: function Error() { [native code] }
+19-09-2022 21:13:12:1312 error: undefined
+21-09-2022 20:51:02:512 error: undefined
+21-09-2022 20:56:12:5612 error: Error trying to update users cartId: TypeError: Cannot read properties of undefined (reading 'filename')
+21-09-2022 21:10:28:1028 error: undefined
+21-09-2022 21:27:32:2732 error: undefined
+21-09-2022 22:06:18:618 error: Error trying to update users cartId: TypeError: this.finOneAndUpdate is not a function
+21-09-2022 22:07:40:740 error: Error trying to update users cartId: TypeError: this.findOneAndUpdate is not a function
+21-09-2022 22:15:59:1559 error: undefined
+23-09-2022 15:36:11:3611 error: An error has occurred when sending the user registration email: matias.karraz@gmail.com
+23-09-2022 15:38:47:3847 error: An error has occurred when sending the user registration email: matias.karraz@gmail.com
+23-09-2022 17:50:10:5010 error: Error has ocurred when sending a SMS, Error: The 'To' number 5493512087336 is not a valid phone number., Numero: 5493512087336
+23-09-2022 18:02:01:21 error: Error in Method getProductsByCartId: TypeError: Cannot read properties of undefined (reading 'id')
+23-09-2022 18:06:35:635 error: An error has occurred when sending the user registration message: matias.karraz@gmail.com
+23-09-2022 18:10:31:1031 error: An error has occurred when sending the user registration message: matias.karraz@gmail.com
+23-09-2022 18:14:18:1418 error: An error has occurred when sending SMS: matias.karraz@gmail.com
+26-09-2022 00:15:09:159 error: Cart not found in addToCartById method.
+26-09-2022 00:18:09:189 error: Cart not found in addToCartById method.
+26-09-2022 00:18:21:1821 error: Cart not found in addToCartById method.
+26-09-2022 19:36:13:3613 error: Cart not found in addToCartById method.
+26-09-2022 19:36:13:3613 error: Response controller: undefined
+26-09-2022 19:41:30:4130 error: Cart not found in addToCartById method.
+26-09-2022 19:41:30:4130 error: Response controller: undefined
+26-09-2022 19:43:26:4326 error: Cart not found in addToCartById method.
+26-09-2022 19:43:26:4326 error: Response controller: undefined
+26-09-2022 19:50:15:5015 error: Response controller: undefined
+26-09-2022 19:53:50:5350 error: Response controller: {
+  _id: new ObjectId("632e2185f266e0761f36e6de"),
+  products: [
+    {
+      name: 'Escuadra',
+      price: '123',
+      description: 'Escuadra',
+      stock: '15',
+      photoURL: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+    }
+  ],
+  user: '632e2184f266e0761f36e6dc',
+  timestamp: 1663967621043,
+  __v: 0
+}
+26-09-2022 20:10:05:105 error: Product not deleted from cart
+26-09-2022 20:10:44:1044 error: Product not deleted from cart
+26-09-2022 20:10:47:1047 error: Product not deleted from cart
+26-09-2022 20:10:52:1052 error: Product not deleted from cart
+26-09-2022 20:15:01:151 error: Product not deleted from cart
+26-09-2022 20:15:04:154 error: Product not deleted from cart
+26-09-2022 20:18:33:1833 error: Product not deleted from cart
+26-09-2022 20:22:58:2258 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com

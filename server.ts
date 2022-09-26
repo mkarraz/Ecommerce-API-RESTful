@@ -1,46 +1,20 @@
 //Express
 import express from 'express'
 import session from 'express-session'
-//Models
-import User from './api/models/schema/user'
-/* import products from './api/models/DBProductsContainer' */
-import daoChatFileSystem from './api/models/daos/chat/daoChatFileSystem'
 //Server config
 import serverConfig from './api/config/server'
 import mongoDBConfig from './api/config/mongoDBConfig'
 import MongoStore from 'connect-mongo'
-import mongoose from 'mongoose'
-import { Server as IOServer } from 'socket.io'
+import indexRouter from './api/routes/indexRouter'
 import cluster from 'cluster'
 import os from 'os'
-//Session routes
-import sessionLogin from './api/routes/session/login'
-import sessionLogout from './api/routes/session/logout'
-import sessionSignup from './api/routes/session/signup'
-//Other routes
-/* import productsRouter from './api/routes/productsRouter' */
-import cartsRouter from './api/routes/cartsRouter'
-import randomNumbersRouter from './api/routes/randomNumbersRouter'
-import infoRouter from './api/routes/infoRouter'
 //Others
 import flash from 'connect-flash'
-import checkUserAuth from './api/middlewares/checkUserAuth'
-import normalizeAndDenormalize from './api/utils/normalizr'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
-/* import dotenv from 'dotenv' */
+import { passportLoad } from './api/utils/passport'
 import path from 'path'
-
-
-//Desafio Clase 32
-import compression from 'compression'
 import Logger from './api/utils/logger'
-// Test loggers
-Logger.info("Información");
-Logger.debug("Debug");
-Logger.warn("Advertencia");
-Logger.error("Error");
-
 
 declare module 'express-session' {
     export interface SessionData {
@@ -51,12 +25,8 @@ declare module 'express-session' {
     }
 }
 
-//DOTENV
-/* dotenv.config() */
-
 //SERVER
-/* const port =  8081 */
-const port = serverConfig.PORT || 8081
+const port = process.env.PORT || 8081
 const app = express()
 
 if (process.argv[3] === 'CLUSTER' && cluster.isPrimary) {
@@ -77,49 +47,16 @@ if (process.argv[3] === 'CLUSTER' && cluster.isPrimary) {
 
 } else {
     //Si entramos en modo distinto de CLUSTER o NO es un proceso primario.
-    app.use('/api/randoms', randomNumbersRouter)
 
     const serverExpress = app.listen(port, () => {
         Logger.info(`Server listening on port ${port}.`, `Process ID: ${process.pid}.`)
     })
     serverExpress.on('error', (err) => Logger.error(`An error has ocurred when starting: ${err}`))
-
-    //SOCKET
-    const io = new IOServer(serverExpress)
-    let messagesArray: any[] = []
-
-    io.on('connection', async (socket) => {
-        Logger.info(`New user connected: ${socket.id}`)
-        /* A cada cliente que se conecte se le mostrarán todos los mensajes y productos almacenados en la db.*/
-        //socket.emit('server:products', await products.getAll())
-        socket.emit('server:message', messagesArray)
-
-        /* socket.on('client:product', async (productInfo) => {
-            products.addProduct(productInfo)
-            io.emit('server:products', await products.getAll())
-        }) */
-
-        /* El servidor recibirá el mensaje del cliente, lo añadirá a la base de datos mediante la clase "chat" y luego utilizará la función getAllMessages para renderizar todos los mensajes en memoria. */
-        socket.on('client:message', async (messageInfo) => {
-            messageInfo.id = messagesArray.length + 1
-            messagesArray.push(messageInfo)
-            daoChatFileSystem.writeChatToFile(messagesArray)
-
-            /* Compression Rate */
-            const denormalizedMessages = messagesArray
-            const normalizedMessages = normalizeAndDenormalize('normalize', messagesArray)
-            let compressionRate = Math.round((1 - (JSON.stringify(normalizedMessages).length / JSON.stringify(denormalizedMessages).length)) * 100)
-            Logger.info('Comnpression Rate: ', compressionRate)
-            io.emit('server:message', messagesArray)
-        })
-    })
-    
 }
 
-
-
 //MIDDLEWARES
-app.use(express.static(path.join(__dirname, '../public')))
+/* app.use(express.static(path.join(__dirname, '../public'))) */
+app.use(express.static(path.join(__dirname, '../uploads')))
 app.use(express.json())//Acceso al rec.body
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
@@ -147,48 +84,13 @@ app.use(
     })
 )
 
-//CONEXION A LA DB
-mongoose.connect(
-    mongoDBConfig.mongoDB.URI,
-    mongoOptions,
-    (err) => {
-        try {
-            Logger.info('Connected to MongoDB Atlas')
-        } catch (err) {
-            Logger.error(`${err}`)
-        }
-    }
-)
-
 //PASSPORT
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
-
-passport.serializeUser((user: any, done: any) => {
-    done(null, user._id)
-})
-  
-passport.deserializeUser(async (id, done) => {
-    const user = await User.findById(id);
-    done(null, user)
-})
+passportLoad(passport)
 
 //ROUTES
+app.use('/', indexRouter)
 
-/* app.use(checkUserRole) *///Middleware: checks user role.
-/* app.use(wrongRoute) *///Middleware: checks not implemented route.
-
-app.use("/login", sessionLogin)
-app.use("/logout", sessionLogout)
-app.use("/signup", sessionSignup)
-//app.use('/api', productsRouter, cartsRouter)//Conexiones hacia las rutas.
-
-app.get("/", async (req, res: express.Response) => {
-	res.render("home", { logged: true, user: req.user })
-})
-
-app.use("/info", infoRouter)
-app.use("/infoCompressed", compression(), infoRouter)
-/* app.use('/randoms', randomNumbersRouter) */
 

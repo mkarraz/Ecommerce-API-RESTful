@@ -1,42 +1,47 @@
 import { Router } from 'express'
 import passport from 'passport'
-import { Strategy } from 'passport-local'
-import User from '../../models/schema/user'
-import { renderSignUp, signUp, renderFailedSignup } from '../../controllers/sessionControllers'
+import { sessionController } from '../../controllers/indexController'
+import user from '../../models/schemas/userSchema'
 import Logger from '../../utils/logger'
+import { upload } from '../../utils/multer'
 
-const sessionSignup = Router()
+export const sessionSignup = Router()
 
-//Estrategia del signup
-passport.use("signup", new Strategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password',
-  },/* Objeto con el q trabajará nuestra strategy */
-    async (email: string, password: string, done: any) => {
-        const newUser = new User({
-          email,
-          password
-        })/* Genero un nuevo schema User */
-        try {
-            await newUser.save()
-            return done(null, newUser) //1)
-        } catch (err:any) {
-             if(err.code === 11000) {
-                return done(null, false,{ message: "User already exists" }) //2)
-            }
-            Logger.error(err)
-            return done(err) //3) 
-              
-            }
+sessionSignup.get('/', sessionController.renderSignUp)
+sessionSignup.post('/', passport.authenticate('signup', { failureRedirect: '/signup/failed', failureFlash: true}), sessionController.signUp)
+sessionSignup.get('/upload', sessionController.renderUpload)
+sessionSignup.post('/upload', upload.single('picture'), async (req: any, res: any, next: any) => {
+    const file = req.file
+    if (!file) {
+        const error = { message: 'Error when uploading file.', statusCode: 400 }
+        return next(error)
+    }
+
+    const newData = {
+        email: req.user.email,
+        password: req.user.password,
+        name: req.user.name,
+        address: req.user.address,
+        age: req.user.age,
+        phoneNumber: req.user.phoneNumber,
+        picture: `${file.filename}`,
+        isAdmin: req.user.isAdmin
+    }
+
+    try {
+        const updatedData = await user.updateOne({ _id: req.user.id }, newData)
+
+        if (updatedData.matchedCount === 0) {
+            const error = { message: "User not found", statusCode: 400 }
+            return next(error)
         }
-  ))
-  
 
-sessionSignup.get('/', renderSignUp)
-/* passport.authenticate('signup', { failureRedirect: '/signup/failed', failureFlash: true}) --> middleware de strategy "signup", si sale mal redirige a '/signup/failed', si sale bien ejecuta signUp */
-sessionSignup.post('/', passport.authenticate('signup', { failureRedirect: '/signup/failed', failureFlash: true}), signUp)
-sessionSignup.get('/failed', renderFailedSignup)
+    } catch (err) {
+        Logger.error(`Error trying to update users avatar: ${err}`)
+    }
+    next()
+  }, sessionController.uploadSuccess)
+sessionSignup.get('/failed', sessionController.renderFailedSignup)
 
 /* FAILURE REDIRECT EXCPECTS:
 1) done(null, user) which means no error and successful authentication
@@ -44,5 +49,3 @@ sessionSignup.get('/failed', renderFailedSignup)
 2) done(null, false, {custom Message}) which means no error but either email or password didn't matched.
 
 3)  done(err) which just returns if error occurs while processing. */
-
-export default sessionSignup
