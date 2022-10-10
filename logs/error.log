@@ -86,3 +86,33 @@
 26-09-2022 20:15:04:154 error: Product not deleted from cart
 26-09-2022 20:18:33:1833 error: Product not deleted from cart
 26-09-2022 20:22:58:2258 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com
+09-10-2022 20:00:00:00 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:00:00:00 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:00:00:00 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:16:53:1653 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:16:53:1653 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:16:53:1653 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:49:49:4949 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:49:50:4950 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:49:50:4950 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:58:17:5817 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:58:17:5817 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 20:58:18:5818 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 21:00:59:059 error: Persistence type not found
+09-10-2022 21:00:59:059 error: Persistence type not found
+09-10-2022 21:01:20:120 error: Error in getAll method: TypeError: Cannot read properties of undefined (reading 'getAll')
+09-10-2022 21:01:21:121 error: Error in getAll method: TypeError: Cannot read properties of undefined (reading 'getAll')
+09-10-2022 21:01:21:121 error: Error in getAll method: TypeError: Cannot read properties of undefined (reading 'getAll')
+09-10-2022 21:03:03:33 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 21:03:03:33 error: Error in getAll method: TypeError: this.model.getAll is not a function
+09-10-2022 21:03:03:33 error: Error in getAll method: TypeError: this.model.getAll is not a function
+10-10-2022 01:52:01:521 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 01:53:04:534 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 01:53:58:5358 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 01:56:17:5617 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 02:03:55:355 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 02:04:11:411 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 02:12:26:1226 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 02:12:33:1233 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 02:13:43:1343 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 02:23:42:2342 error: Error in getProductsByCartId method: TypeError: (intermediate value).thisProducts is not a function

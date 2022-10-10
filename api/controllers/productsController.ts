@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
-import { productService } from '../services/productService'
+import ProductService from '../services/productService'
 import Logger from '../utils/logger'
 
 const getAll = async(req: Request, res: Response) => {
     Logger.info(`${req.method} request to '${req.originalUrl}' route: Getting all products from DB`)
     try {
-        const products = await productService.getAllProducts()
+        const products = await ProductService.getAllProducts()
         return products
     } catch (err) {
         Logger.error(`Error in getAll method: ${err}`)
@@ -16,7 +16,7 @@ const getById = async (req: Request, res: Response) => {
     Logger.info(`${req.method} request to '${req.originalUrl}' route: Getting product by id from DB`)
     try {
         const { id } = req.params
-        const body = await productService.getProductById(id)
+        const body = await ProductService.getProductById(id)
         res.json(body)
     } catch (err) {
         Logger.error(`Error in getById method: ${err}`)
@@ -27,7 +27,7 @@ const addProduct = async (req: Request, res: Response) => {
     Logger.info(`${req.method} request to '${req.originalUrl}' route: Adding new product to DB`)
     try {
         const product = req.body
-        await productService.addProduct(product)
+        await ProductService.addProduct(product)
         res.redirect('/')
     } catch (err) {
         Logger.error(`Error in addProduct method: ${err}`)
@@ -39,7 +39,7 @@ const updateProductById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params
         const product = req.body
-        await productService.updateProductById(id, product)
+        await ProductService.updateProductById(id, product)
 
         res.json({
             msg: `Product ${id} updated.`,
@@ -53,7 +53,7 @@ const deleteProductById = async (req: Request, res: Response) => {
     Logger.info(`${req.method} request to '${req.originalUrl}' route: Deleting product by id from DB`)
     try {
         const { id } = req.params
-        const deletedProduct = await productService.deleteProductById(id)
+        const deletedProduct = await ProductService.deleteProductById(id)
 
         res.json({
             deletedProduct

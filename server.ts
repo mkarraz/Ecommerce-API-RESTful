@@ -3,7 +3,7 @@ import express from 'express'
 import session from 'express-session'
 //Server config
 import serverConfig from './api/config/server'
-import mongoDBConfig from './api/config/mongoDBConfig'
+import persistenceConfig from './api/config'
 import MongoStore from 'connect-mongo'
 import indexRouter from './api/routes/indexRouter'
 import cluster from 'cluster'
@@ -71,7 +71,7 @@ app.use(
     session({
       store: MongoStore.create({
         mongoUrl:
-            mongoDBConfig.mongoDB.URI,
+            persistenceConfig.MONGO_ATLAS_URL,
             mongoOptions,
       }),
       secret: process.env.SECRET_KEY as string,
