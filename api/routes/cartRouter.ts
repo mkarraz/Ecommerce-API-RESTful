@@ -1,27 +1,23 @@
 import { Router } from 'express'
-import { cartController } from '../controllers/indexController'
+import { CartController } from '../controllers/indexController'
 
 const cartRouter = Router()
 
 cartRouter
     .route('/')
-    .post(cartController.cartCreate)
-    .get(cartController.getProductsByCartId)
+    .post(CartController.cartCreate)
+    .get(CartController.getProductsByCartId)
 
 cartRouter
     .route('/delete')
-    .post(cartController.deleteCartProducts)
+    .post(CartController.deleteCartProducts)
 
 cartRouter
     .route('/addProduct')
-    .post(cartController.addToCartById)
+    .post(CartController.addToCartById)
 
 cartRouter
     .route('/deleteProduct')
-    .post(cartController.deleteProductByCartId)
-
-cartRouter
-    .route('/order')
-    .post(cartController.cartOrder)
+    .post(CartController.deleteProductByCartId)
 
 export default cartRouter

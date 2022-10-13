@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 import { User } from '../../interfaces'
 import { NextFunction } from 'express'
-import { cartController } from '../../controllers/cartController'
+import { CartController } from '../../controllers/indexController'
 import Logger from '../../utils/logger'
 
 
@@ -33,7 +33,7 @@ userSchema.pre('save', async function (next) {/* .pre: Realiza esto antes de rea
 userSchema.post('save', async function (res: any) {
   try {
     const user = { id: this.id, email: this.email }
-    await cartController.cartCreate(res, user)
+    await CartController.cartCreate(res, user)
 
   } catch (err: any) {
     Logger.error(`Error trying to update user cartId: ${err}`)

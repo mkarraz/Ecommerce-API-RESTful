@@ -21,9 +21,9 @@ class CartsDAOMongoDB extends ICartDAO {
   }
 
   public async createNewCart(user: any) {
-      //const cart = new this.model({user: user.id, products: []})
       const cart = new this.model({user: {id: user.id, username: user.email}, products: []})
-      await cart.save()
+      const data = await cart.save()
+      return new this.DTO(data).toJson()
   }
 
   public async cartProdDeleteById(user: any): Promise<any | any> {

@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { sessionController } from "../../controllers/indexController"
+import { SessionController } from "../../controllers/indexController"
 
 export const sessionLogout = Router()
 
-sessionLogout.post("/", sessionController.logout)
+sessionLogout.post("/", SessionController.logout)

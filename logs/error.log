@@ -116,3 +116,45 @@
 10-10-2022 02:12:33:1233 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
 10-10-2022 02:13:43:1343 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
 10-10-2022 02:23:42:2342 error: Error in getProductsByCartId method: TypeError: (intermediate value).thisProducts is not a function
+10-10-2022 21:06:53:653 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com
+10-10-2022 21:24:25:2425 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com
+10-10-2022 21:26:02:262 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com
+10-10-2022 21:34:17:3417 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com
+10-10-2022 21:51:40:5140 error: MongoAtlas getAll method error: CastError: Cast to ObjectId failed for value "{
+  name: 'Escuadra',
+  price: '123',
+  description: 'Escuadra',
+  stock: '15',
+  photoURL: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+}" (type Object) at path "_id" for model "products"
+10-10-2022 21:59:31:5931 error: MongoAtlas getAll method error: CastError: Cast to ObjectId failed for value "{
+  name: 'Escuadra',
+  price: '123',
+  description: 'Escuadra',
+  stock: '15',
+  photoURL: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+}" (type Object) at path "_id" for model "products"
+10-10-2022 22:07:10:710 error: MongoAtlas getAll method error: CastError: Cast to ObjectId failed for value "{
+  name: 'Escuadra',
+  price: '123',
+  description: 'Escuadra',
+  stock: '15',
+  photoURL: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+}" (type Object) at path "_id" for model "products"
+10-10-2022 22:08:22:822 error: MongoAtlas getAll method error: MongooseError: Cannot populate path `cart` because it is not in your schema. Set the `strictPopulate` option to false to override.
+10-10-2022 22:18:34:1834 error: MongoAtlas getAll method error: Error: There is not products in the cart.
+10-10-2022 22:18:59:1859 error: MongoAtlas getAll method error: Error: There is not products in the cart.
+10-10-2022 22:40:57:4057 error: Error in getProductsByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+10-10-2022 22:41:33:4133 error: MongoAtlas getAll method error: CastError: Cast to ObjectId failed for value "{
+  name: 'Escuadra',
+  price: '123',
+  description: 'Escuadra',
+  stock: '15',
+  photoURL: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png'
+}" (type Object) at path "_id" for model "products"
+12-10-2022 00:06:21:621 error: MongoAtlas getById method error: CastError: Cast to ObjectId failed for value "NaN" (type number) at path "_id" for model "products"
+12-10-2022 00:15:58:1558 error: MongoAtlas getById method error: CastError: Cast to ObjectId failed for value "NaN" (type number) at path "_id" for model "products"
+12-10-2022 00:16:01:161 error: MongoAtlas getById method error: CastError: Cast to ObjectId failed for value "NaN" (type number) at path "_id" for model "products"
+12-10-2022 01:09:28:928 error: Error in getById method: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+12-10-2022 22:42:48:4248 error: Error in addProduct method: TypeError: r.status is not a function
+13-10-2022 08:16:16:1616 error: MongoAtlas addProduct method error: ValidationError: timestamp: Cast to date failed for value "13/10/2022 08:16:09" (type string) at path "timestamp"

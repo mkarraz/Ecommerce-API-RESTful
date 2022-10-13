@@ -5,6 +5,8 @@ import mongoConnection from '../../mongoDB/mongoConnection'
 import ProductDTO from '../../DTOs/productDTO'
 import Logger from '../../../utils/logger'
 
+const objectId = mongoose.Types.ObjectId
+
 class ProductMongoDAO extends IProductDAO {
 
   model: mongoose.Model<any, {}, {}, {}>
@@ -28,20 +30,7 @@ class ProductMongoDAO extends IProductDAO {
   public async getAll(): Promise<any[] | any> {
     try {
       const foundItems = await this.model.find()
-      const data: any = foundItems.map( entity => 
-        new this.DTO(entity).toJson())
-      /* const data: any = foundItems.map( entity =>
-        new this.DTO(
-          entity._id,
-          entity.name,
-          entity.price,
-          entity.description,
-          entity.photoURL,
-          entity.stock,
-          entity.timestamp
-        ).toJson()
-      ) */
-      return data
+      return foundItems.map(entity => new this.DTO(entity).toJson())
     } catch (err) {
       Logger.error(`MongoAtlas getAll method error: ${err}`)
     }
@@ -49,25 +38,29 @@ class ProductMongoDAO extends IProductDAO {
 
   public async getById(id: any): Promise<any | Error> {
     try {
-      const foundItem = await this.model.findOne({ _id: id }, { __v: 0 })
 
-      if (foundItem === null) {
-        return { error: 'Product not found' }
-      } else {
-        const data: any = new this.DTO(foundItem).toJson()
-        return data
-      }
+      if (!objectId.isValid(id)) return undefined
+
+      const foundItem = await this.model.findById(id)
+
+      if (!foundItem) return null
+
+      return new this.DTO(foundItem).toJson()
+
     } catch (err) {
       Logger.error(`MongoAtlas getById method error: ${err}`)
     }
   }
 
-  public async addProduct(product: any): Promise<any | void> {
+  public async addProduct(productInputs: any): Promise<any | void> {
     try {
-      const newProduct = new this.model(product)/* Nuevo prod con formato de objeto basado en el Schema, mediante Model. */
-      await newProduct.save()/* Método de guardado de model() */
+      //const newProduct = await new this.model(productInputs).save()
+      const newProduct = new this.model(productInputs)
+      const data = await newProduct.save()
+      return new this.DTO(data).toJson()
+      //return new this.DTO(newProduct)
     } catch (err) {
-      console.log('Method add: ', err)
+      Logger.error(`MongoAtlas addProduct method error: ${err}`)
     }
   }
 
@@ -78,24 +71,25 @@ class ProductMongoDAO extends IProductDAO {
       if (updatedData.matchedCount === 0) {
         return { error: 'Product not found.' }
       } else {
-        return { msg: `Product id: ${id} updated!` }
+        return this.getById(id)
       }
     } catch (err) {
-      console.log('Method update: ', err)
+      Logger.error(`MongoAtlas updateProductById method error: ${err}`)
     }
   }
 
   public async deleteProductById(id: any): Promise<any> {
     try {
-      const deletedData = await this.model.deleteOne({ _id: id })
+      const entity = await this.getById(id)
 
-      if (deletedData.deletedCount === 0) {
-        return { error: 'Product not found.' }
-      } else {
-        return { msg: `Product id: ${id} deleted!` }
-      }
+      if (!entity) return undefined
+
+      await this.model.deleteOne({ _id: id })
+
+      return entity
+
     } catch (err) {
-      console.log('Method deleteById: ', err)
+      Logger.error(`MongoAtlas deleteProductById method error: ${err}`)
     }
   }
 }

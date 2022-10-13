@@ -1,5 +1,3 @@
-import Logger from "../../utils/logger"
-
 class ProductDTO {
 
     #id: string

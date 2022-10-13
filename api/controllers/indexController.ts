@@ -1,5 +1,6 @@
-import { productsController } from "./productsController"
-import { cartController } from "./cartController"
-import { sessionController } from "./sessionController"
+import ProductController from "./ProductController"
+import CartController from "./CartController"
+import SessionController from "./SessionController"
+import OrderController from "./OrderController"
 
-export { productsController, cartController, sessionController }
+export { ProductController, CartController, SessionController, OrderController }

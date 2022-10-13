@@ -6,32 +6,33 @@ class ProductService {
     /* const model = m('products') */
     model: any
 
-    constructor(model: any){
+    constructor(model: any) {
         this.model = model
     }
 
-    async getAllProducts(){
+    async getAllProducts() {
         const data = await this.model.getAll()
         return data
     }
-    
-    async getProductById(id: any){
-        const data = await this.model.getById(Number(id))
+
+    async getProductById(id: any) {
+        //const data = await this.model.getById(Number(id))
+        const data = await this.model.getById(id)
         return data
     }
-    
-    async addProduct(product: any){
-        const data = await this.model.addProduct(product)
+
+    async addProduct(productInputs: any) {
+        const data = await this.model.addProduct(productInputs)
         return data
     }
-    
-    async updateProductById(id: any, product: any){
-        const data = await this.model.updateProductById(Number(id), product)
+
+    async updateProductById(id: any, dataUpdate: any) {
+        const data = await this.model.updateProductById(id, dataUpdate)
         return data
     }
-    
-    async deleteProductById(id: any){
-        const data = await this.model.deleteProductById(Number(id))
+
+    async deleteProductById(id: any) {
+        const data = await this.model.deleteProductById(id)
         return data
     }
 }

@@ -1,15 +1,15 @@
 import { Router } from 'express'
 import passport from 'passport'
-import { sessionController } from '../../controllers/indexController'
+import { SessionController } from '../../controllers/indexController'
 import user from '../../models/schemas/userSchema'
 import Logger from '../../utils/logger'
 import { upload } from '../../utils/multer'
 
 export const sessionSignup = Router()
 
-sessionSignup.get('/', sessionController.renderSignUp)
-sessionSignup.post('/', passport.authenticate('signup', { failureRedirect: '/signup/failed', failureFlash: true}), sessionController.signUp)
-sessionSignup.get('/upload', sessionController.renderUpload)
+sessionSignup.get('/', SessionController.renderSignUp)
+sessionSignup.post('/', passport.authenticate('signup', { failureRedirect: '/signup/failed', failureFlash: true}), SessionController.signUp)
+sessionSignup.get('/upload', SessionController.renderUpload)
 sessionSignup.post('/upload', upload.single('picture'), async (req: any, res: any, next: any) => {
     const file = req.file
     if (!file) {
@@ -40,8 +40,8 @@ sessionSignup.post('/upload', upload.single('picture'), async (req: any, res: an
         Logger.error(`Error trying to update users avatar: ${err}`)
     }
     next()
-  }, sessionController.uploadSuccess)
-sessionSignup.get('/failed', sessionController.renderFailedSignup)
+  }, SessionController.uploadSuccess)
+sessionSignup.get('/failed', SessionController.renderFailedSignup)
 
 /* FAILURE REDIRECT EXCPECTS:
 1) done(null, user) which means no error and successful authentication

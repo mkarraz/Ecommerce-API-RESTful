@@ -37,12 +37,12 @@
             </div> 
             <% if(products.length !== 0) { %>
                 <div class="text-center">
-                    <form action='cart/delete' method='POST' class="mt-2 mx-3">
+                    <form action='/delete' method='POST' class="mt-2 mx-3">
                         <button type="submit" onclick="delalert()" class="btn btn-danger">Delete all products form cart</button>
                     </form>
                 </div>
                 <div class="text-center">
-                    <form action='cart/order' method='POST' class="mt-2 mx-3">
+                    <form action='/order' method='POST' class="mt-2 mx-3">
                         <button type="submit" onclick="orderalert()" class="btn btn-success">Order</button>
                     </form>
                 </div>

@@ -1,6 +1,7 @@
 import persistenceConfig from "../config"
 import mongoDbAtlasProd from "./DAOs/products/mongoDbAtlas"
 import mongoDbAtlasCart from "./DAOs/cart/mongoDbAtlas"
+import mongoDbAtlasOrder from "./DAOs/order/mongoDbAtlas"
 import Logger from "../utils/logger"
 
 class PersistenceFactory {
@@ -10,11 +11,13 @@ class PersistenceFactory {
                 case 3:
                     if (modelName === 'products') { return mongoDbAtlasProd }
                     if (modelName === 'cart') { return mongoDbAtlasCart }
+                    if (modelName === 'order') { return mongoDbAtlasOrder }
                     break;
             
                 default:
                     if (modelName === 'products') { return mongoDbAtlasProd }
                     if (modelName === 'cart') { return mongoDbAtlasCart }
+                    if (modelName === 'order') { return mongoDbAtlasOrder }
                     break;
             }
 
