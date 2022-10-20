@@ -158,3 +158,4 @@
 12-10-2022 01:09:28:928 error: Error in getById method: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 12-10-2022 22:42:48:4248 error: Error in addProduct method: TypeError: r.status is not a function
 13-10-2022 08:16:16:1616 error: MongoAtlas addProduct method error: ValidationError: timestamp: Cast to date failed for value "13/10/2022 08:16:09" (type string) at path "timestamp"
+19-10-2022 21:04:36:436 error: MongoAtlas updateProductById method error: MongoServerError: Performing an update on the path '_id' would modify the immutable field '_id'

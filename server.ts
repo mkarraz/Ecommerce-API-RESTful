@@ -15,6 +15,10 @@ import passport from 'passport'
 import { passportLoad } from './api/utils/passport'
 import path from 'path'
 import Logger from './api/utils/logger'
+//GraphQL
+import { graphqlHTTP } from "express-graphql"
+import graphProductSchema from './api/graphQl/graphProductSchema'
+import { graphProductController } from './api/graphQl/graphProductController'
 
 declare module 'express-session' {
     export interface SessionData {
@@ -89,6 +93,19 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 passportLoad(passport)
+
+//GraphQL
+app.use('/graphql', graphqlHTTP({
+    schema: graphProductSchema,
+    rootValue: {
+        getProduct: graphProductController.getProduct,
+        getProducts: graphProductController.getProducts,
+        createProduct: graphProductController.createProduct,
+        updateProduct: graphProductController.updateProduct,
+        deleteProduct: graphProductController.deleteProduct
+    },
+    graphiql: true
+}))
 
 //ROUTES
 app.use('/', indexRouter)

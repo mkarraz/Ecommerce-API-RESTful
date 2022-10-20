@@ -1,6 +1,6 @@
-const { get } = require('mongoose')
+const axios = require('axios')
 
-const axios = require('axios').default
+const instance = axios.create({ baseURL: "http://localhost:8081" })
 
 const getAllProducts = async() => {
     try {
