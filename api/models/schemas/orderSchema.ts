@@ -1,22 +1,18 @@
 import mongoose from 'mongoose'
 
 const orderSchema = new mongoose.Schema({
-    products: [{ type: Object, required: true, ref: 'products' }],
     user: {
         type: String, required: true
     },
-    timestamp: {
-        type: Number,
-        required: true,
-        default: Date.now
-    },
+    products: [{ type: Object, required: true, ref: 'products' }],
     status: {
         type: String,
         default: 'generada'
     },
-    number: {
-        type: Number,
-        default: 0
+    timestamp: {
+        type: String,
+        required: true,
+        default: new Date().toLocaleString(),
     }
 })
 

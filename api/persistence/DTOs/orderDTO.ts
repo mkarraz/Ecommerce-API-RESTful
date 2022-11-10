@@ -15,15 +15,9 @@ class OrderDTO {
         this.#status = newOrder.status
     }
 
-    getId(){ return this.#id }
-    getProducts(){ return { product: this.#products } }
-    getUser(){ return this.#user }
-    getTimestamp(){ return this.#timestamp }  
-    getStatus(){ return this.#status} 
-
     toJson(){
         const orderDisplayed = {
-            id: this.#id,
+            //orderNo: this.#id,
             timestamp: this.#timestamp,
             user: this.#user,
             products: this.#products,

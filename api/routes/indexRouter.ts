@@ -14,10 +14,10 @@ const indexRouter = Router()
 indexRouter.use("/login", sessionLogin)
 indexRouter.use("/logout", sessionLogout)
 indexRouter.use("/signup", sessionSignup)
-indexRouter.use('/views', viewsRouter)
+/* indexRouter.use('/views', viewsRouter) */
 indexRouter.use('/api/products', productsRouter)
 indexRouter.use('/api/cart', cartRouter)
-indexRouter.use('/order', orderRouter)
+indexRouter.use('/api/order', orderRouter)
 
 indexRouter.use('/', checkUserAuth, async (req, res) => {
     return res.redirect('/views')

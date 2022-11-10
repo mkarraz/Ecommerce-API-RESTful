@@ -22,8 +22,8 @@ class CartController {
     async deleteCartProducts(req: Request, res: Response) {
         try {
             const user = req.user
-            await CartService.cartProdDeleteById(user)
-            res.redirect('/api/cart')
+            const emptyCart = await CartService.deleteCartProducts(user)
+            return res.status(200).json({ Cart: emptyCart })
         } catch (err) {
             Logger.error(`Error in cartProdDeleteById method: ${err}`)
         }
@@ -34,7 +34,7 @@ class CartController {
         try {
             const user = req.user
             const cartProducts = await CartService.getProductsByCartId(user)
-            res.render('cart', { products: cartProducts, user: user })
+            return res.status(200).json({ User_Cart : cartProducts })
         } catch (err) {
             Logger.error(`Error in getProductsByCartId method: ${err}`)
         }
@@ -43,10 +43,11 @@ class CartController {
     async addToCartById(req: Request, res: Response) {
         try {
             const user = req.user
-            const product = req.body
+            const quantity = req.body.quantity
+            const { productId } = req.params
 
-            await CartService.addToCartById(user, product)
-            res.redirect('/api/cart')
+            const productAdded = await CartService.addToCartById(user, productId, quantity)
+            return res.status(200).json({ Cart: productAdded })
         } catch (err) {
             Logger.error(`Error in addToCartById method: ${err}`)
         }
@@ -55,10 +56,10 @@ class CartController {
     async deleteProductByCartId(req: Request, res: Response) {
         try {
             const user = req.user
-            const product = req.body
+            const { productId } = req.params
 
-            await CartService.deleteProductByCartId(user, product)
-            res.redirect('/api/cart')
+            const productDeleted = await CartService.deleteProductByCartId(user, productId)
+            return res.status(200).json({ Cart: productDeleted })
         } catch (err) {
             Logger.error(`Error in deleteProductByCartId method: ${err}`)
         }

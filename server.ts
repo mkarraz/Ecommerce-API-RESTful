@@ -5,9 +5,11 @@ import session from 'express-session'
 import serverConfig from './api/config/server'
 import persistenceConfig from './api/config'
 import MongoStore from 'connect-mongo'
-import indexRouter from './api/routes/indexRouter'
 import cluster from 'cluster'
 import os from 'os'
+
+//Routes
+import indexRouter from './api/routes/indexRouter'
 //Others
 import flash from 'connect-flash'
 import cookieParser from 'cookie-parser'
@@ -15,10 +17,6 @@ import passport from 'passport'
 import { passportLoad } from './api/utils/passport'
 import path from 'path'
 import Logger from './api/utils/logger'
-//GraphQL
-import { graphqlHTTP } from "express-graphql"
-import graphProductSchema from './api/graphQl/graphProductSchema'
-import { graphProductController } from './api/graphQl/graphProductController'
 
 declare module 'express-session' {
     export interface SessionData {
@@ -93,19 +91,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 passportLoad(passport)
-
-//GraphQL
-app.use('/graphql', graphqlHTTP({
-    schema: graphProductSchema,
-    rootValue: {
-        getProduct: graphProductController.getProduct,
-        getProducts: graphProductController.getProducts,
-        createProduct: graphProductController.createProduct,
-        updateProduct: graphProductController.updateProduct,
-        deleteProduct: graphProductController.deleteProduct
-    },
-    graphiql: true
-}))
 
 //ROUTES
 app.use('/', indexRouter)

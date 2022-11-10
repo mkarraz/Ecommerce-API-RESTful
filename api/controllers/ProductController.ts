@@ -29,6 +29,19 @@ class ProductController {
         }
     }
 
+    async getByCategory(req: Request, res: Response) {
+        Logger.info(`${req.method} request to '${req.originalUrl}' route: Getting product by category from DB`)
+        try {
+            const { category } = req.params
+            const filteredProducts = await ProductService.getProductByCategory(category)
+            if (filteredProducts === undefined || filteredProducts === null) return res.status(404).json({ error: 'Cannot find requested product' })
+            return res.status(200).json({ ProductsByCategories: filteredProducts })
+        } catch (err) {
+            Logger.error(`Error in getById method: ${err}`)
+            return res.status(500).json({ error: 'An error has occurred.' })
+        }
+    }
+
     async addProduct(req: Request, res: Response) {
         Logger.info(`${req.method} request to '${req.originalUrl}' route: Adding new product to DB`)
         try {

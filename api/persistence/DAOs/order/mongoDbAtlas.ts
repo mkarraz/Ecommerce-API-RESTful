@@ -1,68 +1,84 @@
-import cartSchema from '../../../models/schemas/cartSchema'
 import orderSchema from '../../../models/schemas/orderSchema'
 import mongoose from 'mongoose'
 import mongoConnection from '../../mongoDB/mongoConnection'
 import Logger from '../../../utils/logger'
 import OrderDTO from '../../DTOs/orderDTO'
+import IOrderDAO from './IOrderDAO'
+import MailSender from '../../../utils/nodeMailer'
+import MessageService from '../../../utils/messagings'
+import cartSchema from '../../../models/schemas/cartSchema'
+import CartDTO from '../../DTOs/cartDTO'
 
-const ObjectId = mongoose.Types.ObjectId
 
-class OrderMongoDAO {
+class OrderDAOMongoDB extends IOrderDAO {
 
-    cartModel: mongoose.Model<any, {}, {}, {}>
     orderModel: mongoose.Model<any, {}, {}, {}>
-    DTO: any
+    cartModel: mongoose.Model<any, {}, {}, {}>
+    OrderDTO: any
+    CartDTO: any
+    static instance: OrderDAOMongoDB
 
-    constructor(cart: mongoose.Model<any, {}, {}, {}>, order: mongoose.Model<any, {}, {}, {}>, DTO: any) {
-        this.cartModel = cart
-        this.orderModel = order
-        this.DTO = DTO
+    constructor(orderModel: mongoose.Model<any, {}, {}, {}>, cartModel: mongoose.Model<any, {}, {}, {}>, OrderDTO: any, CartDTO: any) {
+        super()
+        this.orderModel = orderModel
+        this.cartModel = cartModel
+        this.OrderDTO = OrderDTO
+        this.CartDTO = CartDTO
         mongoConnection()
     }
 
-    public async createOrder(user: any): Promise<any[] | any> {
+    static getInstance(orderSchema: mongoose.Model<any, {}, {}, {}>, OrderDTO: any) {
+        if (!this.instance) {
+          this.instance = new OrderDAOMongoDB(orderSchema, cartSchema, OrderDTO, CartDTO)
+        }
+        return this.instance
+      }
 
-        if(!ObjectId.isValid(user.id)) return undefined
+    public async createOrder(user: any): Promise<any> {
 
         try {
-            const cartProducts = await this.cartModel
-                .find({user: user.id})
-                .populate({path: 'products', select: '_id title description code thumbnail price'}).exec()
             
-            Logger.info(`cartProducts, ${cartProducts}`)
+            const cart = await this.cartModel.findOne({ userId: user._id })
+
+            const cartProducts: any = new this.CartDTO(cart).getProducts()
 
             if( cartProducts.length == 0 ) throw new Error('There is not products in the cart.')
-
-            const products = cartProducts.map( cartProd => { 
-                return {
-                    ...cartProd.product, 
-                    quantity: cartProd.quantity
-                } 
-            })
-
-            Logger.info(`products, ${products}`)
+            
 
             const newOrder  = await this.orderModel.create(
                 { 
-                    user: user.id, 
-                    products: products,
-                    number: await this.orderModel.countDocuments({}) 
+                    user: user.email, 
+                    products: cartProducts.products,
+                    status: "generated" 
                 }
             )
 
-            Logger.info(`newOrder, ${newOrder}`)
+            //eMail to Admin
+            await MailSender.newOrder(user, cartProducts.products)
+            //SMS to user
+            await MessageService.newSMS(user)
+            //Whatsapp message to Admin
+            await MessageService.newWhatsapp(user) 
 
-            //await this.cartModel.deleteMany({ user: user.id })
+            const data = new this.OrderDTO(newOrder).toJson()
 
-            const data: any = new this.DTO(newOrder).toJson()
+            await this.cartModel.updateOne(
+                { _id: cart._id },
+                {
+                  $set: {
+                    products: 
+                      []
+                  }
+                }
+            )
 
-            Logger.info(`data, ${data}`)
             return data
+
         } catch (err) {
-            Logger.error(`MongoAtlas getAll method error: ${err}`)
+            Logger.error(`MongoAtlas createOrder method error: ${err}`)
         }
     }
 
 }
 
-export default new OrderMongoDAO(cartSchema, orderSchema, OrderDTO)
+export default new OrderDAOMongoDB(orderSchema, cartSchema, OrderDTO, CartDTO)

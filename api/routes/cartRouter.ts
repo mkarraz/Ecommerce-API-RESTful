@@ -7,17 +7,14 @@ cartRouter
     .route('/')
     .post(CartController.cartCreate)
     .get(CartController.getProductsByCartId)
+    .delete(CartController.deleteCartProducts)
 
 cartRouter
-    .route('/delete')
-    .post(CartController.deleteCartProducts)
-
-cartRouter
-    .route('/addProduct')
+    .route('/addProduct/:productId')
     .post(CartController.addToCartById)
 
 cartRouter
-    .route('/deleteProduct')
-    .post(CartController.deleteProductByCartId)
+    .route('/:productId')
+    .delete(CartController.deleteProductByCartId)
 
 export default cartRouter

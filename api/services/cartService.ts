@@ -14,23 +14,23 @@ class CartService {
         return data
     }
     
-    async cartProdDeleteById(user: any){
-        const data = await this.model.cartProdDeleteById(user)
+    async deleteCartProducts(user: any){
+        const data = await this.model.deleteCartProducts(user)
         return data
     }
     
     async getProductsByCartId(user: any){
-        const data = await this.model.getProductsByCartId(user)
+        return await this.model.getProductsByCartId(user)
+        //return data
+    }
+    
+    async addToCartById(user: any, productId: any, quantity: any){
+        const data = await this.model.addToCartById(user, productId, quantity)
         return data
     }
     
-    async addToCartById(user: any, product: any){
-        const data = await this.model.addToCartById(user, product)
-        return data
-    }
-    
-    async deleteProductByCartId(user: any, product: any){
-        const data = await this.model.deleteProductByCartId(user, product)
+    async deleteProductByCartId(user: any, productId: any){
+        const data = await this.model.deleteProductByCartId(user, productId)
         return data
     }
 }

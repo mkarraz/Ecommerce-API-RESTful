@@ -12,7 +12,7 @@ class OrderService {
         this.model = model
     }
 
-    async getProductsByCartId(user: any){
+    /* async getProductsByCartId(user: any){
         //const order = await this.model.createOrder(user)//Creacion de Schema Order
 
 
@@ -20,13 +20,18 @@ class OrderService {
         await this.model.cartProdDeleteById(user)
         
         //eMail to Admin
-        await MailSender.newOrder(user, data)
+            //await MailSender.newOrder(user, data)
         //SMS to user
-        await MessageService.newSMS(user)
+            //await MessageService.newSMS(user)
         //Whatsapp message to Admin
-        await MessageService.newWhatsapp(user)      
+            //await MessageService.newWhatsapp(user)      
 
         return data
+    } */
+
+    async createOrder(user: any){
+        const order = await this.model.createOrder(user)
+        return order
     }
     
 }

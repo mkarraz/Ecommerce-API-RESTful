@@ -3,7 +3,6 @@ const model = m('products')
 
 class ProductService {
 
-    /* const model = m('products') */
     model: any
 
     constructor(model: any) {
@@ -16,8 +15,12 @@ class ProductService {
     }
 
     async getProductById(id: any) {
-        //const data = await this.model.getById(Number(id))
         const data = await this.model.getById(id)
+        return data
+    }
+
+    async getProductByCategory(category: any) {
+        const data = await this.model.getByCategory(category)
         return data
     }
 

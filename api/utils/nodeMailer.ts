@@ -58,15 +58,17 @@ class MailSender{
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Thumbnail</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${products.map((product: any) =>
-                    `<tr>
+                                `<tr>
                                     <td>${product.name}</td>
                                     <td>${product.price}</td>
+                                    <td>${product.quantity}</td>
                                     <td>${product.description}</td>
                                     <td><img style="max-width: 40px" src="${product.photoURL}"></img></td>
                                 </tr>`)}
@@ -75,7 +77,7 @@ class MailSender{
                         `
             })
         } catch (err) {
-            Logger.error(`An error has occurred when sending the user registration email: ${user.email}`)
+            Logger.error(`An error has occurred when sending the user NewOrder email: ${user.email}`)
         }
     }
 

@@ -7,9 +7,13 @@ import { upload } from '../../utils/multer'
 
 export const sessionSignup = Router()
 
-sessionSignup.get('/', SessionController.renderSignUp)
-sessionSignup.post('/', passport.authenticate('signup', { failureRedirect: '/signup/failed', failureFlash: true}), SessionController.signUp)
-sessionSignup.get('/upload', SessionController.renderUpload)
+//sessionSignup.get('/upload', SessionController.renderUpload)
+
+sessionSignup.post('/', passport.authenticate('signup', { failureRedirect: '/signup/failed', failureFlash: true}), async (req,res) => {
+    res.status(200).json({ message: 'User registered'})
+})
+
+
 sessionSignup.post('/upload', upload.single('picture'), async (req: any, res: any, next: any) => {
     const file = req.file
     if (!file) {
@@ -40,8 +44,9 @@ sessionSignup.post('/upload', upload.single('picture'), async (req: any, res: an
         Logger.error(`Error trying to update users avatar: ${err}`)
     }
     next()
-  }, SessionController.uploadSuccess)
-sessionSignup.get('/failed', SessionController.renderFailedSignup)
+}, SessionController.uploadSuccess)
+
+sessionSignup.get('/failed', SessionController.failedSignup)
 
 /* FAILURE REDIRECT EXCPECTS:
 1) done(null, user) which means no error and successful authentication

@@ -159,3 +159,33 @@
 12-10-2022 22:42:48:4248 error: Error in addProduct method: TypeError: r.status is not a function
 13-10-2022 08:16:16:1616 error: MongoAtlas addProduct method error: ValidationError: timestamp: Cast to date failed for value "13/10/2022 08:16:09" (type string) at path "timestamp"
 19-10-2022 21:04:36:436 error: MongoAtlas updateProductById method error: MongoServerError: Performing an update on the path '_id' would modify the immutable field '_id'
+03-11-2022 16:34:58:3458 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 16:37:18:3718 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 16:40:26:4026 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 16:41:37:4137 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 16:43:03:433 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 16:45:49:4549 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 16:50:43:5043 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 17:22:04:224 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 17:23:56:2356 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 17:24:43:2443 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading '_id')
+03-11-2022 17:49:58:4958 error: Error in cartCreate method: ValidationError: user: Cast to string failed for value "{
+  id: '63642976e8598c7dbd1439a7',
+  username: 'cesar.bergamasco@gmail.com'
+}" (type Object) at path "user"
+03-11-2022 17:49:58:4958 error: Error trying to update user cartId: TypeError: e.status is not a function
+03-11-2022 23:33:57:3357 error: Product not deleted from cart
+03-11-2022 23:47:17:4717 error: Error in deleteProductByCartId method: TypeError: Cannot read properties of undefined (reading 'id')
+03-11-2022 23:47:39:4739 error: Error in deleteProductByCartId method: Error: Query filter must be an object, got an array 
+04-11-2022 00:51:31:5131 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading 'count')
+04-11-2022 01:07:57:757 error: Error in addToCartById method: TypeError: Cannot read properties of undefined (reading 'count')
+10-11-2022 13:20:39:2039 error: Error in createOrder method, Order Controller: TypeError: this.model.create is not a function
+10-11-2022 13:34:34:3434 error: undefined
+10-11-2022 13:35:05:355 error: MongoAtlas getAll method error: ValidationError: user: Path `user` is required.
+10-11-2022 13:36:04:364 error: MongoAtlas getAll method error: ValidationError: user: Path `user` is required.
+10-11-2022 13:38:34:3834 error: MongoAtlas getAll method error: ValidationError: user: Path `user` is required.
+10-11-2022 17:07:33:733 error: Error in getProductsByCartId method: Error: There is no products in the cart.
+10-11-2022 17:56:15:5615 error: Products not deleted from cart
+10-11-2022 17:56:25:5625 error: Products not deleted from cart
+10-11-2022 18:00:49:049 error: An error has occurred when sending the user registration email: cesar.bergamasco@gmail.com
+10-11-2022 18:00:51:051 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com

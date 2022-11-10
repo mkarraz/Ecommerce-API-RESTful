@@ -9,7 +9,7 @@ class ICartDAO {
         throw new Error('Cart - cartProdDeleteById not Implemented')
     }
 
-    async addToCartById(user: any, newProduct: any){
+    async addToCartById(user: any, newProduct: any, quantity: any){
         throw new Error('Cart - addToCartById not Implemented')
     }
 

@@ -3,28 +3,31 @@ class CartDTO {
     #id: string
     #products: [Object]
     #userId: string   
+    #userEmail: string   
     #timestamp: number
 
     constructor( cart: any ) {
-        this.#id = cart._id
+        this.#id = cart.id
         this.#products = cart.products
-        this.#userId = cart.user
+        this.#userId = cart.userId
+        this.#userEmail = cart.userEmail
         this.#timestamp = cart.timestamp      
     }
 
-    getId(){ return this.#id }
-    getProducts(){ return { product: this.#products } }
-    getUserId(){ return this.#userId }
-    getTimestamp(){ return this.#timestamp }   
+    getId(){ return { products: this.#id } }
+    getProducts() { return { products: this.#products } }
+    getUserId(){ return { products: this.#userId } }
+    getTimestamp(){ return { products: this.#timestamp } }
 
     toJson(){
         const cartDisplayed = {
             id: this.#id,
-            product: this.#products,
+            products: this.#products,
             userId: this.#userId,
+            userEmail: this.#userEmail,
             timestamp: this.#timestamp
         }
-        return cartDisplayed.product
+        return cartDisplayed
     }
 }
 

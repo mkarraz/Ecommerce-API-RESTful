@@ -52,13 +52,27 @@ class ProductMongoDAO extends IProductDAO {
     }
   }
 
+  public async getByCategory(category: any): Promise<any | Error> {
+    try {
+
+      const foundItems = await this.model.find({ description: { $in: `${category}` } })
+
+      if (!foundItems) return null
+
+      return foundItems.map(entity => new this.DTO(entity).toJson())
+
+    } catch (err) {
+      Logger.error(`MongoAtlas getById method error: ${err}`)
+    }
+  }
+
   public async addProduct(productInputs: any): Promise<any | void> {
     try {
-      //const newProduct = await new this.model(productInputs).save()
       const newProduct = new this.model(productInputs)
       const data = await newProduct.save()
+
       return new this.DTO(data).toJson()
-      //return new this.DTO(newProduct)
+
     } catch (err) {
       Logger.error(`MongoAtlas addProduct method error: ${err}`)
     }
