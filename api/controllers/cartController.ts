@@ -59,7 +59,7 @@ class CartController {
             const { productId } = req.params
 
             const productDeleted = await CartService.deleteProductByCartId(user, productId)
-            return res.status(200).json({ Cart: productDeleted })
+            return res.status(200).json({ ProductDeleted_ID: productDeleted })
         } catch (err) {
             Logger.error(`Error in deleteProductByCartId method: ${err}`)
         }

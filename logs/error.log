@@ -189,3 +189,5 @@
 10-11-2022 17:56:25:5625 error: Products not deleted from cart
 10-11-2022 18:00:49:049 error: An error has occurred when sending the user registration email: cesar.bergamasco@gmail.com
 10-11-2022 18:00:51:051 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com
+10-11-2022 22:25:11:2511 error: Error in getById method: TypeError: Cannot convert undefined or null to object
+10-11-2022 22:28:56:2856 error: Error in getById method: TypeError: Cannot convert undefined or null to object

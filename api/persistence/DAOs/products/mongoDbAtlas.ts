@@ -55,7 +55,7 @@ class ProductMongoDAO extends IProductDAO {
   public async getByCategory(category: any): Promise<any | Error> {
     try {
 
-      const foundItems = await this.model.find({ description: { $in: `${category}` } })
+      const foundItems = await this.model.find({ category: { $in: `${category}` } })
 
       if (!foundItems) return null
 

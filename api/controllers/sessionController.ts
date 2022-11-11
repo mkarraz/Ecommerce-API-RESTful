@@ -96,19 +96,6 @@ class SessionController {
 		res.status(201).render('uploadSuccess')
 		next()
 	}
-
-	//RENDERs
-
-	//ADD_PRODUCTS_FORM
-	async renderAddProdFormView(req: Request, res: Response) {
-		Logger.info(`${req.method} request to '${req.originalUrl}' route: Rendering add product form page.`)
-		try {
-			const user = req.user
-			res.status(200).render('products/addProdForm', { user: user });
-		} catch (err) {
-			Logger.error(err)
-		}
-	}
 }
 
 export default new SessionController

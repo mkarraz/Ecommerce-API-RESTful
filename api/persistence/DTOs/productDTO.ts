@@ -6,6 +6,7 @@ class ProductDTO {
     #description: string
     #photoURL: string
     #stock: number
+    #category: string
     #timestamp: number
 
     constructor(  product: any  ) {
@@ -15,6 +16,7 @@ class ProductDTO {
         this.#description = product.description
         this.#photoURL = product.photoURL
         this.#stock = product.stock
+        this.#category = product.category
         this.#timestamp = product.timestamp
     }
 
@@ -34,6 +36,7 @@ class ProductDTO {
             description: this.#description,
             photoURL: this.#photoURL,
             stock: this.#stock,
+            category: this.#category,
             timestamp: this.#timestamp
         }
         return prodDisplayed

@@ -7,9 +7,11 @@ import persistenceConfig from './api/config'
 import MongoStore from 'connect-mongo'
 import cluster from 'cluster'
 import os from 'os'
-
 //Routes
 import indexRouter from './api/routes/indexRouter'
+//Middlewares
+import errorHandler from './api/middlewares/errorHandler'
+import wrongRoute from './api/middlewares/wrongRoute'
 //Others
 import flash from 'connect-flash'
 import cookieParser from 'cookie-parser'
@@ -95,4 +97,9 @@ passportLoad(passport)
 //ROUTES
 app.use('/', indexRouter)
 
+//EXTRA ERRORs HANDLER
+app.use(errorHandler)
+
+//ROUTE ERRORs HANDLER
+app.use(wrongRoute)
 
