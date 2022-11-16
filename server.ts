@@ -2,11 +2,12 @@
 import express from 'express'
 import session from 'express-session'
 //Server config
-import serverConfig from './api/config/server'
-import persistenceConfig from './api/config'
+import config from './api/config/index'
 import MongoStore from 'connect-mongo'
 import cluster from 'cluster'
 import os from 'os'
+//Socket
+import { Server as IOServer } from 'socket.io'
 //Routes
 import indexRouter from './api/routes/indexRouter'
 //Middlewares
@@ -19,6 +20,7 @@ import passport from 'passport'
 import { passportLoad } from './api/utils/passport'
 import path from 'path'
 import Logger from './api/utils/logger'
+import ChatService from './api/services/ChatService'
 
 declare module 'express-session' {
     export interface SessionData {
@@ -30,12 +32,12 @@ declare module 'express-session' {
 }
 
 //SERVER
-const port = process.env.PORT || 8081
+const port = config.PORT
 const app = express()
 
 if (process.argv[3] === 'CLUSTER' && cluster.isPrimary) {
 
-    const cpuQty = os.cpus().length //Nro de procesadores detectados.
+    const cpuQty = os.cpus().length
     Logger.info(`Number of CPUs: ${cpuQty}`)
     Logger.info(`Master PID ${process.pid} is running`)
 
@@ -44,24 +46,48 @@ if (process.argv[3] === 'CLUSTER' && cluster.isPrimary) {
     }
 
     cluster.on("exit", (worker, code, signal) => {
-        /* Reinicia el server si se cae. */
+        /* Reboot server if needed */
         Logger.info(`Worker ${worker.process.pid} died`)
         cluster.fork()
     })
 
 } else {
-    //Si entramos en modo distinto de CLUSTER o NO es un proceso primario.
 
     const serverExpress = app.listen(port, () => {
         Logger.info(`Server listening on port ${port}.`, `Process ID: ${process.pid}.`)
     })
     serverExpress.on('error', (err) => Logger.error(`An error has ocurred when starting: ${err}`))
+
+    //SOCKET
+    const io = new IOServer(serverExpress)
+
+    io.on('connection', async (socket) => {
+        console.log(`New user connected: ${socket.id}`)
+        let messagesArray = await ChatService.getMessages()
+        
+        socket.emit('server:message', messagesArray)
+
+        try {
+            socket.on('client:message', async (newMessage) => {
+                try {
+                    await ChatService.addMessage(newMessage)
+                    messagesArray = await ChatService.getMessages()
+                } catch (err) {
+                    Logger.error(`Error in addMessage socket method: ${err}`)
+                }
+
+                io.emit('server:message', messagesArray)
+            })
+        } catch (err) {
+            Logger.error(`Error at receiving client:message socket method: ${err}`)
+        }
+    })
 }
 
 //MIDDLEWARES
-/* app.use(express.static(path.join(__dirname, '../public'))) */
+app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.static(path.join(__dirname, '../uploads')))
-app.use(express.json())//Acceso al rec.body
+app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
 
@@ -70,21 +96,21 @@ app.set('views', path.join(__dirname, '../api/views'))
 app.set('view engine', 'ejs')
 
 //CONFIGURACION DE LA SESION
-const mongoOptions: any = { useNewUrlParser: true, useUnifiedTopology: true }
+const mongoOptions: any = config.MONGO_OPTIONS
 app.use(
     session({
-      store: MongoStore.create({
-        mongoUrl:
-            persistenceConfig.MONGO_ATLAS_URL,
+        store: MongoStore.create({
+            mongoUrl:
+                config.MONGO_ATLAS_URL,
             mongoOptions,
-      }),
-      secret: process.env.SECRET_KEY as string,
-      resave: false,
-      saveUninitialized: false,
-      rolling: true, // Reinicia el tiempo de expiracion con cada request
-      cookie: {
-        maxAge: 60000 * 10,
-      },
+        }),
+        secret: config.SECRET_KEY as string,
+        resave: false,
+        saveUninitialized: false,
+        rolling: true,
+        cookie: {
+            maxAge: Number(config.SESSION_TIME),
+        },
     })
 )
 
@@ -96,6 +122,8 @@ passportLoad(passport)
 
 //ROUTES
 app.use('/', indexRouter)
+
+
 
 //EXTRA ERRORs HANDLER
 app.use(errorHandler)

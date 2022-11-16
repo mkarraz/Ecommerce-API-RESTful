@@ -4,20 +4,19 @@ class OrderDTO {
     #timestamp: number
     #user: string
     #products: [Object]
-    #status: string   
-    
+    #status: string
 
-    constructor( newOrder: any ) {
+
+    constructor(newOrder: any) {
         this.#id = newOrder._id
-        this.#timestamp = newOrder.timestamp 
-        this.#user = newOrder.user 
+        this.#timestamp = newOrder.timestamp
+        this.#user = newOrder.user
         this.#products = newOrder.products
         this.#status = newOrder.status
     }
 
-    toJson(){
+    toJson() {
         const orderDisplayed = {
-            //orderNo: this.#id,
             timestamp: this.#timestamp,
             user: this.#user,
             products: this.#products,

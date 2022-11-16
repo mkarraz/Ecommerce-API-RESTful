@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "4c05a368-7eb1-4059-ae23-cb18fa5fe796",
+		"name": "CoderHouse - Backend 31005",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21399280"
+	},
+	"item": [
+		{
+			"name": "Proyecto_Final",
+			"item": [
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "addProduct",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "getAllProducts",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "getProdByID",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "updateProductById",
+							"request": {
+								"method": "PUT",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "deleteProductById",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "GetProductByCategory",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cart",
+					"item": [
+						{
+							"name": "cartDelete",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "addToCartById",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "getProductsByCartId",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "deleteProductByCartId",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "deleteProductsByCartId",
+							"request": {
+								"method": "DELETE",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Signup",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "createOrder",
+							"request": {
+								"method": "POST",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

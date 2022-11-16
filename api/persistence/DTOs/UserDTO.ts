@@ -10,8 +10,8 @@ class UserDTO {
     #picture: String
     #isAdmin: String
 
-    constructor( user: any ) {  
-        
+    constructor(user: any) {
+
         this.#id = user._id
         this.#email = user.email
         this.#password = user.password
@@ -24,12 +24,16 @@ class UserDTO {
 
     }
 
-    /* getId(){ return { products: this.#id } }
-    getProducts() { return { products: this.#products } }
-    getUserId(){ return { products: this.#userId } }
-    getTimestamp(){ return { products: this.#timestamp } } */
+    chatUser() {
+        const userDisplayed = {
+            id: this.#id,
+            email: this.#email,
+            isAdmin: this.#isAdmin
+        }
+        return userDisplayed
+    }
 
-    toJson(){
+    toJson() {
         const userDisplayed = {
             id: this.#id,
             email: this.#email,

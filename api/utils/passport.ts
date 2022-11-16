@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import { PassportStatic } from 'passport'
 import { Strategy } from 'passport-local'
 import User from '../models/schemas/userSchema'
@@ -43,7 +42,7 @@ export function passportLoad(passport: PassportStatic) {
                 phoneNumber: `+54${req.body.phoneNumber}`,
                 picture: 'avatar.png',
                 isAdmin: 'false'
-            })/* Genero un nuevo schema User */
+            })
 
             try {
                 const data = await UserService.saveUser(newUser)
@@ -62,7 +61,7 @@ export function passportLoad(passport: PassportStatic) {
     passport.serializeUser((user: any, done: any) => {
         done(null, user._id)
     })
-      
+
     passport.deserializeUser(async (id, done) => {
         const user = await User.findById(id);
         done(null, user)

@@ -14,10 +14,10 @@ const userSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   phoneNumber: { type: String, required: true },
   picture: { type: String, required: true  },
-  isAdmin: { type: String, required: true }
+  isAdmin: { type: Boolean, required: true }
 }, { collection: 'users' })
 
-userSchema.pre('save', async function (next) {/* .pre: Realiza esto antes de realizar la operación 'save' */
+userSchema.pre('save', async function (next) {
   const user = this
   if (!user) return next()
   try {

@@ -191,3 +191,9 @@
 10-11-2022 18:00:51:051 error: An error has occurred when sending SMS: cesar.bergamasco@gmail.com
 10-11-2022 22:25:11:2511 error: Error in getById method: TypeError: Cannot convert undefined or null to object
 10-11-2022 22:28:56:2856 error: Error in getById method: TypeError: Cannot convert undefined or null to object
+15-11-2022 20:04:14:414 error: Error in getMessages method: Error: Your chat is empty.
+15-11-2022 20:18:12:1812 error: Error in getMessages method: TypeError: (intermediate value).toJson is not a function
+15-11-2022 20:18:13:1813 error: Error in getMessages method: TypeError: (intermediate value).toJson is not a function
+15-11-2022 21:53:47:5347 error: Error in getMessages method: ValidationError: timestamp: Cast to date failed for value "15/11/2022" (type string) at path "timestamp"
+15-11-2022 22:16:42:1642 error: An error has occured: Unexpected field
+15-11-2022 22:32:59:3259 error: An error has occured: Failed to lookup view "home" in views directory "C:\Matias\Programación\CoderHouse\31005 - Programación Backend\ProyectoFinal\Proyecto Final\api\views"

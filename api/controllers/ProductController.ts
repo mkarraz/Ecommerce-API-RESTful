@@ -87,7 +87,6 @@ class ProductController {
             Logger.error(`Error in deleteProductById method: ${err}`)
         }
     }
-
 }
 
 export default new ProductController()

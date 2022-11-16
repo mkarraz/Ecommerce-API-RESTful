@@ -1,18 +1,17 @@
-import { Request, Response, NextFunction } from 'express'
 import cartSchema from '../../../models/schemas/cartSchema'
 import mongoConnection from '../../mongoDB/mongoConnection'
 import Logger from '../../../utils/logger'
 import ICartDAO from './ICartDAO'
-import mongoose, { Aggregate } from 'mongoose'
-import CartDTO from '../../DTOs/cartDTO'
+import mongoose from 'mongoose'
+import CartDTO from '../../mongoDB/CartDTO'
 import ProductService from '../../../services/ProductService'
 
 class CartsDAOMongoDB extends ICartDAO {
-  
+
   model: mongoose.Model<any, {}, {}, {}>
   DTO: any
   static instance: CartsDAOMongoDB
-  
+
   constructor(cartModel: mongoose.Model<any, {}, {}, {}>, DTO: any) {
     super()
     this.model = cartModel
@@ -28,10 +27,9 @@ class CartsDAOMongoDB extends ICartDAO {
   }
 
   public async createNewCart(user: any) {
-      //const cart = new this.model({user: {id: user.id, username: user.email}, products: []})
-      const cart = new this.model({userId: user.id, userEmail: user.email , products: []})
-      const data = await cart.save()
-      return new this.DTO(data).toJson()
+    const cart = new this.model({ userId: user.id, userEmail: user.email, products: [] })
+    const data = await cart.save()
+    return new this.DTO(data).toJson()
   }
 
   public async deleteCartProducts(user: any): Promise<any | any> {
@@ -40,11 +38,11 @@ class CartsDAOMongoDB extends ICartDAO {
     if (cart === null) {
       return { error: 'Cart not found in cartProdDeleteById method' }
     } else {
-        const cartProductsDelete = await this.model.updateOne(
+      const cartProductsDelete = await this.model.updateOne(
         { _id: cart._id },
         {
           $set: {
-            products: 
+            products:
               []
           }
         }
@@ -145,7 +143,7 @@ class CartsDAOMongoDB extends ICartDAO {
       return { error: 'Cart not found' }
     } else {
       const data: any = new this.DTO(cart).getProducts()
-      if( data.products.length == 0 ) return { message: 'There is no products in the cart.'}
+      if (data.products.length == 0) return { message: 'There is no products in the cart.' }
       return data
     }
   }

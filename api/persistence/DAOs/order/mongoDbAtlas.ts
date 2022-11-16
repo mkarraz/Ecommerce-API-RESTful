@@ -2,12 +2,12 @@ import orderSchema from '../../../models/schemas/orderSchema'
 import mongoose from 'mongoose'
 import mongoConnection from '../../mongoDB/mongoConnection'
 import Logger from '../../../utils/logger'
-import OrderDTO from '../../DTOs/orderDTO'
+import OrderDTO from '../../DTOs/OrderDTO'
 import IOrderDAO from './IOrderDAO'
 import MailSender from '../../../utils/nodeMailer'
 import MessageService from '../../../utils/messagings'
 import cartSchema from '../../../models/schemas/cartSchema'
-import CartDTO from '../../DTOs/cartDTO'
+import CartDTO from '../../mongoDB/CartDTO'
 
 
 class OrderDAOMongoDB extends IOrderDAO {
@@ -29,27 +29,27 @@ class OrderDAOMongoDB extends IOrderDAO {
 
     static getInstance(orderSchema: mongoose.Model<any, {}, {}, {}>, OrderDTO: any) {
         if (!this.instance) {
-          this.instance = new OrderDAOMongoDB(orderSchema, cartSchema, OrderDTO, CartDTO)
+            this.instance = new OrderDAOMongoDB(orderSchema, cartSchema, OrderDTO, CartDTO)
         }
         return this.instance
-      }
+    }
 
     public async createOrder(user: any): Promise<any> {
 
         try {
-            
+
             const cart = await this.cartModel.findOne({ userId: user._id })
 
             const cartProducts: any = new this.CartDTO(cart).getProducts()
 
-            if( cartProducts.length == 0 ) throw new Error('There is not products in the cart.')
-            
+            if (cartProducts.length == 0) throw new Error('There is not products in the cart.')
 
-            const newOrder  = await this.orderModel.create(
-                { 
-                    user: user.email, 
+
+            const newOrder = await this.orderModel.create(
+                {
+                    user: user.email,
                     products: cartProducts.products,
-                    status: "generated" 
+                    status: "generated"
                 }
             )
 
@@ -57,18 +57,16 @@ class OrderDAOMongoDB extends IOrderDAO {
             await MailSender.newOrder(user, cartProducts.products)
             //SMS to user
             await MessageService.newSMS(user)
-            //Whatsapp message to Admin
-            await MessageService.newWhatsapp(user) 
 
             const data = new this.OrderDTO(newOrder).toJson()
 
             await this.cartModel.updateOne(
                 { _id: cart._id },
                 {
-                  $set: {
-                    products: 
-                      []
-                  }
+                    $set: {
+                        products:
+                            []
+                    }
                 }
             )
 

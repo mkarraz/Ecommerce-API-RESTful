@@ -12,8 +12,6 @@ export const sessionSignup = Router()
 sessionSignup.post('/', passport.authenticate('signup', { failureRedirect: '/signup/failed', failureFlash: true}), async (req,res) => {
     res.status(200).json({ message: 'User registered'})
 })
-
-
 sessionSignup.post('/upload', upload.single('picture'), async (req: any, res: any, next: any) => {
     const file = req.file
     if (!file) {

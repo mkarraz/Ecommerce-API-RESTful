@@ -9,7 +9,7 @@ class ProductDTO {
     #category: string
     #timestamp: number
 
-    constructor(  product: any  ) {
+    constructor(product: any) {
         this.#id = product._id
         this.#name = product.name
         this.#price = product.price
@@ -28,7 +28,7 @@ class ProductDTO {
     getStock() { return this.#stock }
     getTimestamp() { return this.#timestamp }
 
-    toJson(){
+    toJson() {
         const prodDisplayed = {
             id: this.#id,
             name: this.#name,

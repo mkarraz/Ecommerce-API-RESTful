@@ -2,7 +2,7 @@ import productSchema from '../../../models/schemas/productSchema'
 import IProductDAO from './IProductDAO'
 import mongoose from 'mongoose'
 import mongoConnection from '../../mongoDB/mongoConnection'
-import ProductDTO from '../../DTOs/productDTO'
+import ProductDTO from '../../DTOs/ProductDTO'
 import Logger from '../../../utils/logger'
 
 const objectId = mongoose.Types.ObjectId

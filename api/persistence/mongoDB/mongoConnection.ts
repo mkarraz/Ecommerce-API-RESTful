@@ -1,10 +1,10 @@
-import persistenceConfig from "../../config"
+import config from '../../config'
 import mongoose from "mongoose"
 import Logger from "../../utils/logger"
 
 const connection = async () => {
     try {
-        await mongoose.connect(persistenceConfig.MONGO_ATLAS_URL)/* Conexión a MongoDB */
+        await mongoose.connect(`${config.MONGO_ATLAS_URL}`)
         Logger.info('Connected to mongoDB Atlas!')
     } catch (err) {
         Logger.error(err)
