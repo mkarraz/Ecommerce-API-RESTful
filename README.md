@@ -86,5 +86,5 @@ To start locally:
 - **SignUp**
   - `POST` | api/signup
 
-_made with_ :persevere: _by ale_
+_Made by Matias Karraz_
 
